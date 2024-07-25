@@ -20,12 +20,14 @@
         "db:generate": "drizzle-kit generate",
         "db:seed": "bun run scripts/seed-db.ts",
         "-- DOCKER": "-------------------------",
-        "prod:up": "docker-compose --file docker/docker-compose.yml up -d",
-        "prod:down": "docker-compose --file docker/docker-compose.yml down",
-        "dev:up": "docker-compose --file docker/dev/docker-compose.yml up -d",
-        "dev:down": "docker-compose --file docker/dev/docker-compose.yml down",
-        "db:up": "docker-compose --file docker/db/docker-compose.yml up -d",
-        "db:down": "docker-compose --file docker/db/docker-compose.yml down"
+        "prod:up": "docker-compose --file docker/docker-compose.yml --env-file .env up -d",
+        "prod:down": "docker-compose --file docker/docker-compose.yml --env-file .env down",
+        "dev:up": "docker-compose --file docker/dev/docker-compose.yml --env-file .env up -d",
+        "dev:down": "docker-compose --file docker/dev/docker-compose.yml --env-file .env down",
+        "db:up": "docker-compose --file docker/db/docker-compose.yml --env-file .env up -d",
+        "db:down": "docker-compose --file docker/db/docker-compose.yml --env-file .env down",
+        "ob:up": "docker-compose --file docker/ob/docker-compose.yml --env-file .env up -d",
+        "ob:down": "docker-compose --file docker/ob/docker-compose.yml --env-file .env down"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.8.1",
@@ -38,10 +40,15 @@
     },
     "dependencies": {
         "@elysiajs/jwt": "^1.0.2",
+        "@elysiajs/opentelemetry": "^1.1.1",
+        "@opentelemetry/exporter-trace-otlp-grpc": "^0.52.1",
+        "@opentelemetry/exporter-trace-otlp-http": "^0.52.1",
+        "@opentelemetry/exporter-trace-otlp-proto": "^0.52.1",
+        "@opentelemetry/sdk-trace-node": "^1.25.1",
         "@t3-oss/env-core": "^0.10.1",
         "drizzle-cuid2": "^1.0.5",
         "drizzle-orm": "^0.31.2",
-        "elysia": "^1.0.23",
+        "elysia": "^1.1.4",
         "postgres": "^3.4.4",
         "zod": "^3.23.8"
     }

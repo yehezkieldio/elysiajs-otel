@@ -6,6 +6,9 @@
 import authModule from "@/modules/(auth)";
 import userModule from "@/modules/(user)";
 import { hasMessage, isJsonString } from "@/util";
+import { opentelemetry } from "@elysiajs/opentelemetry";
+import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
+import { BatchSpanProcessor } from "@opentelemetry/sdk-trace-node";
 import { Elysia } from "elysia";
 
 export const api = new Elysia();
@@ -107,6 +110,12 @@ api.mapResponse(({ response, set }) => {
 
 api.use(authModule);
 api.use(userModule);
+
+api.use(
+    opentelemetry({
+        spanProcessors: [new BatchSpanProcessor(new OTLPTraceExporter())],
+    }),
+);
 
 api.listen(3000, () => {
     console.log("Server is running on port 3000");
